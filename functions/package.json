@@ -7,7 +7,6 @@
     "serve": "npm run build && firebase emulators:start --import ./EmulatorData",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "prepare-emulator": "gsutil -m cp -r gs://civic-base.appspot.com/EmulatorData .",
     "test": "jest --watch --verbose"
@@ -34,7 +33,9 @@
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "firebase-functions-test": "^2.3.0",
     "jest": "28",

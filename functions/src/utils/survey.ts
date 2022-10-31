@@ -7,7 +7,7 @@ export enum MethodIds {
 }
 
 export function incrementAccess(surveyId: string, status: 'pilot' | 'published' | 'finished') {
-  var survey = db.collection('surveys').doc(surveyId)
+  const survey = db.collection('surveys').doc(surveyId)
 
   if (status === 'pilot') {
     survey.update({

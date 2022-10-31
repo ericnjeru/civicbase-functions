@@ -30,7 +30,7 @@ export const createSurvey = (req: AuthRequest, res: Response) => {
     .add(survey)
     .then((doc) => res.status(201).json(doc.id))
     .catch((error) => {
-      functions.logger.error(`Failed to create survey`, { error, survey })
+      functions.logger.error('Failed to create survey', { error, survey })
       return res.status(500).json({ ...error })
     })
 }

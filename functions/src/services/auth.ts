@@ -56,23 +56,26 @@ export const isAuthenticated = (req: any) => {
 export const middleware =
   (handler: (req: any, res: any) => Promise<void> | void, { authenticatedRoute = false, method = '' } = {}) =>
   async (req: any, res: any) => {
-    console.log('################# method', req.method)
-    functions.logger.warn('################# method', req.method)
+    if (method === req.method || method === 'OPTIONS') {
+      if (authenticatedRoute) {
+        const isAuthorized = await isAuthenticated(req)
+        if (!isAuthorized) {
+          functions.logger.warn('Unauthorized user')
 
-    if (method !== req.method) {
-      functions.logger.warn('Wrong method')
-      return res.status(405).json({ message: 'Wrong Method' })
-    }
-
-    if (authenticatedRoute) {
-      const isAuthorized = await isAuthenticated(req)
-      if (!isAuthorized) {
-        functions.logger.warn('Unauthorized user')
-        return res.status(401).json({ message: 'Unauthorized' })
+          return corsHandler(req, res, () => {
+            return res.status(401).json({ message: 'Unauthorized' })
+          })
+        }
       }
-    }
 
-    return corsHandler(req, res, () => {
-      return handler(req, res)
-    })
+      return corsHandler(req, res, () => {
+        return handler(req, res)
+      })
+    } else {
+      functions.logger.warn(`Wrong method ${req.method}`)
+
+      return corsHandler(req, res, () => {
+        return res.status(405).json({ message: 'Wrong Method' })
+      })
+    }
   }

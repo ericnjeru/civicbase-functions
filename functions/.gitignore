@@ -9,3 +9,8 @@ typings/
 node_modules/
 
 .runtimeconfig.json
+
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.env

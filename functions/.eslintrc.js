@@ -21,11 +21,17 @@ module.exports = {
   },
   ignorePatterns: [
     '/lib/**/*', // Ignore built files.
-    '.prettierrc.js',
+    '/.prettierrc.js',
+    '/tests/**/*',
+    '/.eslintrc.js',
+    '/jest.config.ts',
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier'],
   rules: {
     quotes: ['error', 'single'],
+    'require-jsdoc': ['off'],
+    'no-case-declarations': ['off'],
+    '@typescript-eslint/no-empty-interface': ['off'],
     'import/no-unresolved': 0,
     'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
   },

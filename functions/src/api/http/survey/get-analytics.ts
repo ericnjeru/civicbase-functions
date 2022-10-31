@@ -34,7 +34,7 @@ const surveyAnalyticsFn = (req: Request, res: Response) => {
                 })
               })
 
-              let response: any = { survey: { ...surveyData, id: survey.id } }
+              const response: any = { survey: { ...surveyData, id: survey.id } }
 
               response.results = getResults(surveyData, answerData)
               response.csv = {
