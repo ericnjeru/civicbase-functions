@@ -2,7 +2,6 @@ import * as functions from 'firebase-functions'
 import { Response } from 'express'
 import { db } from '../../../config/firebase'
 import { AuthRequest } from '../../../types/express'
-import { setAnalytics } from '../../../utils/analytics'
 import { setQuestionsId } from '../../../utils/survey'
 
 export const createSurvey = (req: AuthRequest, res: Response) => {
@@ -11,7 +10,6 @@ export const createSurvey = (req: AuthRequest, res: Response) => {
     createdAt: new Date().toISOString(),
     uid: req.user?.uid, // user will always be defined at this point
     status: 'pilot',
-    analytics: setAnalytics(),
   }
   // TODO: this logic is being repeated
   if (req.body.setup.method === 'Quadratic') {

@@ -1,5 +1,3 @@
-import { admin, db } from '../../src/config/firebase'
-
 export const genericSurvey = {
   features: {
     multipleAnswerFromSameSource: undefined,
@@ -85,18 +83,4 @@ export const conjoint: any = {
     method: 'Conjoint',
     topic: '[Jest] Conjoint test',
   },
-}
-
-export function incrementRespondent(surveyId: string, status: 'pilot' | 'published' | 'finished') {
-  const survey = db.collection('surveys').doc(surveyId)
-
-  if (status === 'pilot') {
-    return survey.update({
-      'analytics.pilot.current.respondents': admin.firestore.FieldValue.increment(1),
-    })
-  } else {
-    return survey.update({
-      'analytics.published.current.respondents': admin.firestore.FieldValue.increment(1),
-    })
-  }
 }

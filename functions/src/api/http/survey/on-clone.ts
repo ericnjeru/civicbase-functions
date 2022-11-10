@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions'
-import { setAnalytics } from '../../../utils/analytics'
 import { db } from '../../../config/firebase'
 import { middleware } from '../../../services/auth'
 import { params } from '../../../utils/params'
@@ -18,7 +17,6 @@ const cloneSurveyFn = (req: Request, res: Response) => {
           topic: `clone - ${doc.data().setup.topic}`,
         },
         createdAt: new Date().toISOString(),
-        analytics: setAnalytics(),
         status: 'pilot',
         finishedAt: null,
         publishedAt: null,

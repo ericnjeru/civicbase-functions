@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
 import { Request, Response } from 'express'
 import { db } from '../../../config/firebase'
-import { incrementRespondent } from '../../../utils/survey'
+import { getIp } from '../../../utils/ip'
 
 export const createAnswer = (req: Request, res: Response) => {
   const answer = {
@@ -9,11 +9,13 @@ export const createAnswer = (req: Request, res: Response) => {
     createdAt: new Date().toISOString(),
   }
 
+  getIp(req, 'respondents')
+
   db.collection('surveys')
     .doc(answer.surveyId)
     .collection('answers')
     .add(answer)
-    .then((doc) => incrementRespondent(answer.surveyId, answer.status).then(() => res.status(201).json(doc.id)))
+    .then((doc) => res.status(201).json(doc.id))
     .catch((error) => {
       functions.logger.error('Create answer', error)
       return res.status(500).json(error)

@@ -1,39 +1,7 @@
-import { db, admin } from '../config/firebase'
-
 export enum MethodIds {
   Quadratic = 'Q',
   Likert = 'L',
   Conjoint = 'C',
-}
-
-export function incrementAccess(surveyId: string, status: 'pilot' | 'published' | 'finished') {
-  const survey = db.collection('surveys').doc(surveyId)
-
-  if (status === 'pilot') {
-    survey.update({
-      'analytics.pilot.current.access': admin.firestore.FieldValue.increment(1),
-    })
-  }
-
-  if (status === 'published') {
-    survey.update({
-      'analytics.published.current.access': admin.firestore.FieldValue.increment(1),
-    })
-  }
-}
-
-export function incrementRespondent(surveyId: string, status: 'pilot' | 'published' | 'finished') {
-  const survey = db.collection('surveys').doc(surveyId)
-
-  if (status === 'pilot') {
-    return survey.update({
-      'analytics.pilot.current.respondents': admin.firestore.FieldValue.increment(1),
-    })
-  } else {
-    return survey.update({
-      'analytics.published.current.respondents': admin.firestore.FieldValue.increment(1),
-    })
-  }
 }
 
 export function setQuestionsId(survey: any) {

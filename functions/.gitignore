@@ -12,5 +12,6 @@ node_modules/
 
 firebase-debug.log
 firestore-debug.log
+yarn-error.log
 ui-debug.log
 .env

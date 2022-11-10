@@ -6,7 +6,7 @@
     "outDir": "lib",
     "sourceMap": true,
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
     "target": "es2017",
     "forceConsistentCasingInFileNames": true,
     "types": ["@types/jest"]
