@@ -13,7 +13,7 @@ const publishSurveyFn = (req: Request, res: Response) => {
       status: 'published',
       publishedAt: new Date().toISOString(),
     })
-    .then(() => res.status(200).json({ message: 'Published' }))
+    .then(() => res.status(200).json({ id: surveyId }))
     .catch((error) => {
       functions.logger.error(`Failed to publish survey [${surveyId}]`, { error })
       return res.status(500).json(error)

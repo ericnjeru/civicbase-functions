@@ -12,6 +12,8 @@ export const getSurvey = (req: Request, res: Response) => {
       if (doc.exists) {
         const survey: any = doc.data() as any
 
+        req.params.status = survey.status
+
         getIp(req, 'access')
 
         res.status(200).json({ ...survey, id: doc.id })

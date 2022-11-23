@@ -26,7 +26,7 @@ export const createSurvey = (req: AuthRequest, res: Response) => {
 
   db.collection('surveys')
     .add(survey)
-    .then((doc) => res.status(201).json(doc.id))
+    .then((doc) => res.status(201).json({ ...survey, id: doc.id }))
     .catch((error) => {
       functions.logger.error('Failed to create survey', { error, survey })
       return res.status(500).json({ ...error })

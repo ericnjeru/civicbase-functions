@@ -19,6 +19,7 @@ export const surveys = svy.surveys
 export const cloneSurvey = svy.clone
 export const finishSurvey = svy.finish
 export const publishSurvey = svy.publish
+export const overview = svy.overview
 
 // SURVEY CRUD
 export const survey = svy.CRUD

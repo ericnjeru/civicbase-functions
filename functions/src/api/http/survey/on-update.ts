@@ -5,7 +5,6 @@ import { AuthRequest } from '../../../types/express'
 import { setQuestionsId } from '../../../utils/survey'
 
 export const updateSurvey = (req: AuthRequest, res: Response) => {
-  const { surveyId } = req.params
   const survey: any = {
     ...req.body,
     updatedAt: new Date().toISOString(),
@@ -24,11 +23,11 @@ export const updateSurvey = (req: AuthRequest, res: Response) => {
   }
 
   db.collection('surveys')
-    .doc(surveyId)
+    .doc(survey.id)
     .update(survey)
-    .then(() => res.status(201).json(surveyId))
+    .then(() => res.status(201).json({ ...survey }))
     .catch((error) => {
-      functions.logger.error(`Failed to update survey [${surveyId}]`, { error })
+      functions.logger.error(`Failed to update survey [${survey.id}]`, { error })
       res.status(500).json({ ...error })
     })
 }

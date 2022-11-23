@@ -9,6 +9,9 @@ export const createAnswer = (req: Request, res: Response) => {
     createdAt: new Date().toISOString(),
   }
 
+  req.params.status = answer.status
+  req.params.surveyId = answer.surveyId
+
   getIp(req, 'respondents')
 
   db.collection('surveys')

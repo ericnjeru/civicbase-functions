@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import { getAuth, sendEmailVerification, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, sendEmailVerification, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { db } from '../../../config/firebase'
 import { middleware } from '../../../services/auth'
 import { Request, Response } from '../../../types/function'
@@ -10,7 +10,11 @@ const signupFn = (req: Request, res: Response) => {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
-      sendEmailVerification(user)
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      }).then(() => {
+        sendEmailVerification(user)
+      })
 
       return user.uid
     })
