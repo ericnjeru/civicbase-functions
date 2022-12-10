@@ -1,10 +1,10 @@
 import * as functions from 'firebase-functions'
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
+import { sendPasswordResetEmail } from 'firebase/auth'
 import { middleware } from '../../../services/auth'
 import { Request, Response } from '../../../types/function'
+import { auth } from '../../../config/firebase'
 
 const resetPasswordFn = (req: Request, res: Response) => {
-  const auth = getAuth()
   const { email } = req.body
 
   sendPasswordResetEmail(auth, email)

@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import * as firebase from 'firebase/app'
+import * as authentication from 'firebase/auth'
 
 const config = {
   apiKey: 'AIzaSyChPtHht6YV1TnZlQ54gvdE8kyfTZfuF_M',
@@ -21,8 +22,9 @@ admin.initializeApp({
   projectId: 'civic-base',
 })
 
-firebase.initializeApp(config)
+const app = firebase.initializeApp(config)
+const auth = authentication.initializeAuth(app)
 
 const db = admin.firestore()
 
-export { admin, db, firebase, config }
+export { admin, db, firebase, config, auth }

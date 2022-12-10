@@ -1,11 +1,10 @@
 import * as functions from 'firebase-functions'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { admin, db } from '../../../config/firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { admin, db, auth } from '../../../config/firebase'
 import { middleware } from '../../../services/auth'
 import { Request, Response } from '../../../types/function'
 
 const loginFn = (req: Request, res: Response) => {
-  const auth = getAuth()
   const { email, password } = req.body
   let uid: string
 

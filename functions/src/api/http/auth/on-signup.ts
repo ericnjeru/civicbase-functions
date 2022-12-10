@@ -1,11 +1,10 @@
 import * as functions from 'firebase-functions'
-import { getAuth, sendEmailVerification, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { db } from '../../../config/firebase'
+import { sendEmailVerification, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { db, auth } from '../../../config/firebase'
 import { middleware } from '../../../services/auth'
 import { Request, Response } from '../../../types/function'
 
 const signupFn = (req: Request, res: Response) => {
-  const auth = getAuth()
   const { name, email, password } = req.body
 
   createUserWithEmailAndPassword(auth, email, password)
@@ -33,7 +32,7 @@ const signupFn = (req: Request, res: Response) => {
       functions.logger.error('Signup', error)
 
       if (error.code === 'auth/email-already-in-use') {
-        return res.status(409).json({ ...error })
+        return res.status(409).json({ message: 'An account with this email already exist' })
       } else {
         return res.status(400).json({ ...error })
       }

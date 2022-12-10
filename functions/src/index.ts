@@ -3,6 +3,7 @@ import * as user from './api/http/users'
 import * as svy from './api/http/survey'
 import * as aswer from './api/http/answer'
 import * as storage from './api/http/storage'
+import * as surveyOverview from './api/http/overview'
 
 // AUTH
 export const login = auth.login
@@ -14,12 +15,10 @@ export const logout = auth.logout
 export const userProfile = user.userProfile
 
 // SURVEY
-export const surveyAnalytics = svy.surveyAnalytics
 export const surveys = svy.surveys
 export const cloneSurvey = svy.clone
 export const finishSurvey = svy.finish
 export const publishSurvey = svy.publish
-export const overview = svy.overview
 
 // SURVEY CRUD
 export const survey = svy.CRUD
@@ -29,3 +28,7 @@ export const answer = aswer.answer
 
 // STORAGE
 export const updaloadRecord = storage.updaloadRecord
+
+// OVERVIEW
+export const overview = surveyOverview.overview
+export const csv = surveyOverview.csv

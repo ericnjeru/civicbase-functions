@@ -1,15 +1,13 @@
 import * as functions from 'firebase-functions'
-// import { getCSV } from '../../../utils/getCSV'
-// import getFeedback from '../../../utils/getFeedback'
-// import { getResults } from '../../../utils/getResults'
 import { db } from '../../../config/firebase'
 import { middleware } from '../../../services/auth'
 import { params } from '../../../utils/params'
 import { Request, Response } from '../../../types/function'
 import { getAccess, getRespodents } from '../../../utils/overview'
 import { getResults } from '../../../utils/getResults'
-import { getCSV } from '../../../utils/getCSV'
 import getFeedback from '../../../utils/getFeedback'
+import { Survey } from '../../../types/survey'
+import { Answer } from '../../../types/answer'
 
 const surveyOverviewFn = (req: Request, res: Response) => {
   const surveyId = params(req)
@@ -18,9 +16,9 @@ const surveyOverviewFn = (req: Request, res: Response) => {
     .get()
     .then((survey) => {
       if (survey.exists) {
-        const surveyData = survey.data() as any
+        const surveyData = survey.data() as Survey
 
-        if (surveyData?.uid !== req.user.uid) {
+        if (surveyData.uid !== req.user.uid) {
           functions.logger.error(`User = ${req.user.uid} has no permission to collect data from survey = ${surveyId}`)
           res.status(403).json({ message: 'You have no permission to see this data' })
         } else {
@@ -70,11 +68,11 @@ const surveyOverviewFn = (req: Request, res: Response) => {
             .collection('answers')
             .get()
             .then((data) => {
-              const answerData: any = []
+              const answerData: Answer[] = []
 
               data.forEach((doc) => {
                 answerData.push({
-                  ...(doc.data() as any),
+                  ...(doc.data() as Answer),
                   id: doc.id,
                 })
               })
@@ -82,18 +80,6 @@ const surveyOverviewFn = (req: Request, res: Response) => {
               const response: any = { survey: { ...surveyData, id: survey.id } }
 
               response.results = getResults(surveyData, answerData)
-              response.csv = {
-                pilot: getCSV(
-                  surveyData,
-                  answerData?.filter(({ status }: { status: string }) => status === 'pilot'),
-                ),
-                published: getCSV(
-                  surveyData,
-                  answerData?.filter(({ status }: { status: string }) => status === 'published'),
-                ),
-              }
-
-              getCSV(surveyData, answerData)
 
               if (surveyData?.setup.feedback?.active) {
                 response.feedback = getFeedback(answerData)
@@ -101,7 +87,6 @@ const surveyOverviewFn = (req: Request, res: Response) => {
 
               overview.feedback = response.feedback
               overview.results = response.results
-              overview.csv = response.csv
             })
             .catch((error) => {
               functions.logger.error(`Survey [${surveyId}] results overview`, error)
