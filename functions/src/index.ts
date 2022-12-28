@@ -13,6 +13,8 @@ export const logout = auth.logout
 
 // USER
 export const userProfile = user.userProfile
+export const updatePassword = user.updatePassword
+export const updateInformation = user.updateInformation
 
 // SURVEY
 export const surveys = svy.surveys
