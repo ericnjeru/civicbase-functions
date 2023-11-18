@@ -15,8 +15,9 @@ firestore-debug.log
 yarn-error.log
 ui-debug.log
 .env
-export.json
+../export.json
 ../survey_access.csv
 ../survey_respondents.csv
 ../survey_results.csv
 src/config/firebase.ts
+*.csv

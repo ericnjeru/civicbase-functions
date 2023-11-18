@@ -12,5 +12,8 @@
     "types": ["@types/jest"]
   },
   "compileOnSave": true,
-  "include": ["src", "tests/*.ts"]
+  "include": ["src", "tests/*.ts", "export.js"],
+  "exclude": [
+    "export.js"
+  ],
 }
